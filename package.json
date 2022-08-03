@@ -1,0 +1,34 @@
+{
+  "name": "clasp-env",
+  "version": "1.0.0",
+  "description": "CLI clasp environment switcher",
+  "main": "app.js",
+  "bin": "./app.js",
+  "scripts": {
+    "test": "jest tests/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/WildH0g/clasp-env.git"
+  },
+  "keywords": [
+    "google",
+    "apps",
+    "script",
+    "clasp",
+    "javascript",
+    "cli",
+    "apps",
+    "script"
+  ],
+  "author": "Dmitry Kostyuk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WildH0g/clasp-env/issues"
+  },
+  "homepage": "https://github.com/WildH0g/clasp-env#readme",
+  "devDependencies": {
+    "@types/jest": "^28.1.6",
+    "jest": "^28.1.3"
+  }
+}
