@@ -1,20 +1,21 @@
 # Welcome to clasp-env 👋
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000)
-[![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)]()
-[![License: ISC](https://img.shields.io/badge/License-ISC-yellow.svg)](#)
+![Version](https://img.shields.io/badge/version-1.0.1-blue.svg?cacheSeconds=2592000)
+![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)
+![License: ISC](https://img.shields.io/badge/License-ISC-yellow.svg)
 [![Twitter: wildhogsm](https://img.shields.io/twitter/follow/wildhogsm.svg?style=social)](https://twitter.com/wildhogsm)
+[![GitHub](https://img.shields.io/github/followers/WildH0g?style=social)](https://www.github.com/WildH0g)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-follow-blue)](https://www.linkedin.com/in/dmitrykostyuk/)
+[![Wurkspaces.dev](https://img.shields.io/badge/Wurkspaces.dev-Hire%20Me-orange)](https://wurkspaces.dev/contact)
 
-> CLI clasp environment switcher
-
-### 🏠 [Homepage](https://github.com/WildH0g/clasp-env#readme)
+> CLI clasp environment switcher 🏠 [Homepage](https://github.com/WildH0g/clasp-env#readme)
 
 ## Usage
 
 Run the following command (without prior installation):
 
 ```sh
-npx clasp-env --folder <path> --scriptId <apps_script_project_id>
+npx clasp-env --folder <path_to_folder> --scriptId <apps_script_project_id>
 ```
 
 ## Run Tests
@@ -27,15 +28,17 @@ npm run test
 
 ### The Strategy
 
-`clasp-env` is a command-line utility that= allows you to switch between different Google Apps Script environments. When you write your code locally and deploy your Google Apps Script code with `clasp`, `clasp` creates a `.clasp.json` file that contains the `scriptId` property. This tells `clasp` what project it needs to push the code to.
+`clasp-env` is a command-line utility that allows you to switch between different Google Apps Script environments. When you write your code locally and deploy your Google Apps Script code with [`clasp`](https://www.npmjs.com/package/@google/clasp), it creates a `.clasp.json` file that contains the `scriptId` property. This tells clasp which project it needs to push the code to.
 
-When working in a team and/or with a client, you want to have multiple environments. You probably want at the minimum a dev environment that you're working in, a test environment for the client or your team to run some acceptance tests before production. And of course they both need to be separate from the production environment.
+When working in a team and/or with a client, you want to have multiple environments. At minimum, you probably want a dev environment (or multiple ones) in which you are working, and a test environment in which the client or your team can run acceptance tests before production. Of course, they must both be separate from the production environment.
 
 `clasp-env` allows you to update the `scriptId` property in the `.clasp.json` file so that the code gets pushed to the intented project environment. The `<path>` indicates the path to the folder where the `.clasp.json` file is located.
 
+It takes two arguments, `<path_to_folder>` and `<apps_script_project_id>`, both of which are mandatory. It then looks up the .clasp.json file in the folder and sets its scriptId to the one specified in the parameter.
+
 ### Include in `package.json` Scripts
 
-You don't want to be typing out the folder paths and IDs every time you want to change the scripts, so it's best to save them in the `package.json` scripts like so:
+You don’t want to type out the folder paths and IDs every time you want to change the scripts, so it’s best to save them in the `package.json`'s `scripts` property like so:
 
 ```json
 {
@@ -46,9 +49,9 @@ You don't want to be typing out the folder paths and IDs every time you want to 
 }
 ```
 
-To switch to the prod environment simply run `npm run clasp/prod` and the `scriptId` property will get updated.
+To switch to the prod environment, simply run `npm run clasp/prod` in the terminal and the `scriptId` property will be updated.
 
-It's also a good idea to combine `clasp-env` with the clasp `clasp push` command, this way as soon as you switch environments, clasp will start pushing your code to the project. the `-w` option in the end stands for "watch", meaning that clasp will be pushing your code every time you save a file.
+It’s also a good idea to combine `clasp-env` with the `clasp push` command. Accordingly, as soon as you switch environments, `clasp` will begin pushing your code to the project. The `-w` option at the end stands for “watch,” meaning that `clasp` will push your code every time you save a file:
 
 ```json
 {
@@ -59,17 +62,39 @@ It's also a good idea to combine `clasp-env` with the clasp `clasp push` command
 }
 ```
 
-To switch to the prod environment and push your code there, run `npm run push/prod`.
+To switch to the prod environment and push your code there, run `npm run push/prod` in the terminal.
 
-If you use `git` with your projects, you also want to add `.clasp.json` files to `.gitignore` so that it's not considered a change in the sourced code every time you switch environments. You can do this by adding this line to the '.gitignore' file.
+Note that the folder must be a relative path from the project root. A typical project structure may look something like this:
 
 ```sh
-**/.clasp.json
+my-app/
+├─ node_modules/
+├─ gas/
+│  ├─ Code.js
+│  ├─ appsscript.json
+│  ├─ .clasp.json
+├─ src/
+│  ├─ index.js
+├─ .gitignore
+├─ package.json
+├─ package-lock.json
+├─ README.md
 ```
 
-### About `clasp`
+The Google Apps Script files, including `.clasp.json`, are in the `gas` folder; thus, the command should look like this:
 
-For an in-depth tutorial about `clasp` read my article [How to Write Google Apps Script Code Locally in VS Code and Deploy It With clasp](https://medium.com/geekculture/how-to-write-google-apps-script-code-locally-in-vs-code-and-deploy-it-with-clasp-9a4273e2d018)
+```sh
+npx clasp-env --folder gas –-scriptId 1k1bnhRoqrESBvS95ZJncRYpsgSdM4anxwo3yI2Egs_Q
+```
+
+### .gitignore
+
+If you use git with your projects, you’ll also want to add `.clasp.json` files to `.gitignore` so that it’s not considered a change in the source code every time you switch environments. You can accomplish this by adding this line to the `.gitignore` file: `**/.clasp.json`
+
+## Related Articles
+
+- [How to Write Google Apps Script Code Locally in VS Code and Deploy It With clasp](https://medium.com/geekculture/how-to-write-google-apps-script-code-locally-in-vs-code-and-deploy-it-with-clasp-9a4273e2d018)
+- [The ULTIMATE Guide to NPM Modules in Google Apps Script](https://medium.com/geekculture/the-ultimate-guide-to-npm-modules-in-google-apps-script-a84545c3f57c)
 
 ## Author
 
